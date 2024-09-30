@@ -16,6 +16,7 @@ export const createRouter = ({ userModel }) => {
   );
 
   userRouter.post("/login", userController.login);
+  userRouter.post("/logout", userController.logout);
 
   return userRouter;
 };

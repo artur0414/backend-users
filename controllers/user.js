@@ -102,4 +102,15 @@ export class UserController {
       return res.status(400).json({ error: error.message });
     }
   };
+
+  logout = async (req, res) => {
+    try {
+      return res
+        .clearCookie("access_token")
+        .status(200)
+        .json({ message: "Logout successfully" });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  };
 }
