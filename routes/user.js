@@ -24,5 +24,12 @@ export const createRouter = ({ userModel }) => {
   userRouter.post("/login", userController.login);
   userRouter.post("/logout", userController.logout);
 
+  userRouter.delete(
+    "/delete/:id",
+    authenticateToken,
+    authorizeAdmin,
+    userController.delete
+  );
+
   return userRouter;
 };

@@ -65,4 +65,17 @@ export class UserModel {
       throw new Error(error);
     }
   }
+
+  static async delete(id) {
+    try {
+      const [result] = await connection.query("DELETE FROM user WHERE id = ?", [
+        id,
+      ]);
+      if (result.affectedRows === 0) return false;
+
+      return "User Deleted";
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
