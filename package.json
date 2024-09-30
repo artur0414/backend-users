@@ -1,0 +1,52 @@
+{
+  "name": "backend-users",
+  "version": "1.0.0",
+  "description": "Backend para cacaoAPI desarrollado con Express.js. Esta API proporciona funcionalidades de autenticación y gestión de usuarios utilizando JWT para un control de acceso seguro. La aplicación está estructurada siguiendo la arquitectura MVC, asegurando una separación clara de responsabilidades. Los modelos de datos son inyectados desde el origen para facilitar la escalabilidad y mantenibilidad. El backend sirve como un servicio central para gestionar usuarios que contribuirán a la información relacionada con el cacao.",
+  "main": "server-with-mysql.js",
+  "scripts": {
+    "test": "echo \\\"No tests specified\\\" && exit 0",
+    "dev": "node --watch server-with-mysql.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artur0414/backend-users.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "jwt",
+    "authentication",
+    "api",
+    "rest",
+    "backend",
+    "mvc",
+    "middleware",
+    "zod",
+    "bcrypt",
+    "nodemailer",
+    "colombia",
+    "cacao",
+    "management",
+    "user",
+    "permissions",
+    "dashboard"
+  ],
+  "author": "Arturo Acosta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artur0414/backend-users/issues"
+  },
+  "homepage": "https://github.com/artur0414/backend-users#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.11.3",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5"
+  }
+}
