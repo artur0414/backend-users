@@ -15,5 +15,7 @@ export const createRouter = ({ userModel }) => {
     userController.getAll
   );
 
+  userRouter.post("/login", userController.login);
+
   return userRouter;
 };
