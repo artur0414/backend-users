@@ -25,7 +25,12 @@ export class UserController {
       });
 
       const token = jwt.sign(
-        { id: user.id, username: user.username, email: user.email },
+        {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        },
         SECRET_JWT_KEY
       );
 
@@ -39,7 +44,16 @@ export class UserController {
         .status(201)
         .json({ user, token });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
+    }
+  };
+
+  getAll = async (req, res) => {
+    try {
+      const users = await this.userModel.getAll();
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
     }
   };
 }
