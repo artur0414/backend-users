@@ -7,7 +7,13 @@ export const createRouter = ({ userModel }) => {
 
   const userController = new UserController({ userModel });
 
-  userRouter.post("/register", userController.create);
+  userRouter.post(
+    "/register",
+    authenticateToken,
+    authorizeAdmin,
+    userController.create
+  );
+
   userRouter.get(
     "/getall",
     authenticateToken,

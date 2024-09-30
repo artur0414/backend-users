@@ -26,26 +26,7 @@ export class UserController {
         role: result.data.role,
       });
 
-      const token = jwt.sign(
-        {
-          name: user.name,
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          role: user.role,
-        },
-        SECRET_JWT_KEY
-      );
-
-      return res
-        .cookie("access_token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production" || false, // Solo si estás en producción
-          sameSite: "Lax",
-          maxAge: 1000 * 60 * 60,
-        })
-        .status(201)
-        .json({ user, token });
+      return res.json({ user, token });
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
