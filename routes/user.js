@@ -31,5 +31,9 @@ export const createRouter = ({ userModel }) => {
     userController.delete
   );
 
+  userRouter.post("/forgot", userController.forgotPassword);
+  userRouter.post("/recover", userController.recover);
+  userRouter.patch("/update", userController.updatePassword);
+
   return userRouter;
 };

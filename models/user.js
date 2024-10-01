@@ -21,7 +21,6 @@ export class UserModel {
         role: role,
       };
     } catch (error) {
-      console.log(error);
       throw new Error(error);
     }
   }
@@ -73,7 +72,65 @@ export class UserModel {
       ]);
       if (result.affectedRows === 0) return false;
 
-      return "User Deleted";
+      return true;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async forgotPassword({ email, code }) {
+    try {
+      const [result] = await connection.query(
+        "SELECT * FROM user WHERE email = ?",
+        [email]
+      );
+
+      if (result.length === 0) {
+        return false;
+      }
+
+      const expirationDate = new Date();
+      expirationDate.setMinutes(expirationDate.getMinutes() + 10); // Establecer la expiración en 10 minutos
+
+      await connection.query(
+        "UPDATE user SET code = ?, code_expiration = ? WHERE email = ?",
+        [code, expirationDate, email] // Actualiza el código y la fecha de expiración
+      );
+
+      return {
+        username: result[0].username,
+        email: result[0].email,
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async recover(username, code) {
+    try {
+      const [result] = await connection.query(
+        "SELECT * from user WHERE username = ?",
+        [username]
+      );
+
+      if (result.length === 0) {
+        return false;
+      }
+
+      return result[0].code;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static async updatePassword({ password, username }) {
+    try {
+      const [result] = await connection.query(
+        "UPDATE user SET password = ? WHERE username = ?",
+        [password, username]
+      );
+
+      return true;
     } catch (error) {
       throw new Error(error);
     }

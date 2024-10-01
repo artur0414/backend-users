@@ -6,6 +6,7 @@ const userSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(100),
   role: z.string().min(4),
+  code: z.string().min(6).optional(),
 });
 
 export const validateApi = (input) => {
