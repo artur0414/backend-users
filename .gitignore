@@ -3,7 +3,6 @@ node_modules/
 
 # Ignorar archivos de entorno
 .env
-config.js
 
 # Ignorar logs
 logs

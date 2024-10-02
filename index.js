@@ -3,6 +3,9 @@ import { PORT } from "./config.js";
 import { corsMiddleware } from "./middlewares/cors.js";
 import cookieParser from "cookie-parser";
 import { createRouter } from "./routes/user.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const createApp = ({ userModel }) => {
   const app = express();

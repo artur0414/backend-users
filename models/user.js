@@ -1,5 +1,10 @@
 import { dbConfig } from "../config.js";
 import mysql2 from "mysql2/promise";
+import {
+  ServerError,
+  DuplicateEntryError,
+  ConnectionRefusedError,
+} from "../errors.js";
 
 const config = dbConfig;
 
@@ -21,16 +26,36 @@ export class UserModel {
         role: role,
       };
     } catch (error) {
-      throw new Error(error);
+      if (error.code === "ER_DUP_ENTRY") {
+        throw new DuplicateEntryError(
+          "El nombre de usuario o correo electrónico ya existen. Por favor, intenta con uno diferente."
+        );
+      } else if (error.code === "ECONNREFUSED") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      } else {
+        throw new ServerError(
+          "un error ocurrió mientras se creaba el usuario, por favor, intenta de nuevo."
+        );
+      }
     }
   }
 
   static async getAll() {
     try {
       const [users] = await connection.query("SELECT * FROM user");
-      return users.map((row) => row);
+      return users;
     } catch (error) {
-      throw new Error(error);
+      if (error.code === "ECONNREFUSED") {
+        throw new Error(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      } else {
+        throw new ServerError(
+          "un error ocurrió mientras se obtenían los usuarios, por favor, intenta de nuevo."
+        );
+      }
     }
   }
 
@@ -61,7 +86,15 @@ export class UserModel {
         role: result[0].role,
       };
     } catch (error) {
-      throw new Error(error);
+      if (error.code === "ECONNREFUSED") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      } else {
+        throw new ServerError(
+          "un error ocurrió mientras se intentaba iniciar sesión, por favor, intenta de nuevo."
+        );
+      }
     }
   }
 
@@ -70,11 +103,17 @@ export class UserModel {
       const [result] = await connection.query("DELETE FROM user WHERE id = ?", [
         id,
       ]);
-      if (result.affectedRows === 0) return false;
-
-      return true;
+      return result.affectedRows > 0;
     } catch (error) {
-      throw new Error(error);
+      if (error.code === "ENOTFOUND") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      } else {
+        throw new ServerError(
+          "un error ocurrió mientras se intentaba eliminar el usuario, por favor, intenta de nuevo."
+        );
+      }
     }
   }
 
@@ -102,11 +141,19 @@ export class UserModel {
         email: result[0].email,
       };
     } catch (error) {
-      throw new Error(error);
+      if (error.code === "ECONNREFUSED") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      } else {
+        throw new ServerError(
+          "un error ocurrió mientras se intentaba recuperar la contraseña, por favor, intenta de nuevo."
+        );
+      }
     }
   }
 
-  static async recover(username, code) {
+  static async recover(username) {
     try {
       const [result] = await connection.query(
         "SELECT * from user WHERE username = ?",
@@ -117,8 +164,16 @@ export class UserModel {
         return false;
       }
 
-      return result[0].code;
+      return {
+        code: result[0].code,
+        expirationCode: result[0].code_expiration,
+      };
     } catch (error) {
+      if (error.code === "ENOTFOUND") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      }
       throw new Error(error);
     }
   }
@@ -132,7 +187,40 @@ export class UserModel {
 
       return true;
     } catch (error) {
-      throw new Error(error);
+      if (error.code === "ENOTFOUND") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      }
+
+      throw new ServerError(
+        "un error ocurrió mientras se intentaba actualizar la contraseña, por favor, intenta de nuevo."
+      );
+    }
+  }
+
+  static async updateRole(input) {
+    try {
+      if (input.role !== "user" && input.role !== "admin") {
+        throw new Error("Invalid role");
+      }
+
+      const [result] = await connection.query(
+        "UPDATE user SET role = ? WHERE username = ?",
+        [input.role, input.username]
+      );
+
+      return result.affectedRows > 0;
+    } catch (error) {
+      if (error.code === "ENOTFOUND") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      }
+
+      throw new ServerError(
+        "un error ocurrió mientras se intentaba actualizar el rol, por favor, intenta de nuevo."
+      );
     }
   }
 }

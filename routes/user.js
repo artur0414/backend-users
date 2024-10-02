@@ -34,6 +34,12 @@ export const createRouter = ({ userModel }) => {
   userRouter.post("/forgot", userController.forgotPassword);
   userRouter.post("/recover", userController.recover);
   userRouter.patch("/update", userController.updatePassword);
+  userRouter.patch(
+    "/update-role",
+    authenticateToken,
+    authorizeAdmin,
+    userController.updateRole
+  );
 
   return userRouter;
 };
