@@ -1,4 +1,5 @@
-// authMiddleware.js
+// Middleware para autenticar y autorizar a los usuarios
+
 import jwt from "jsonwebtoken";
 import { SECRET_JWT_KEY } from "../config.js";
 

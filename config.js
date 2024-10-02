@@ -1,3 +1,5 @@
+// Este archivo es el encargado de manejar las variables de entorno y exportarlas
+
 import { config } from "dotenv";
 
 config();

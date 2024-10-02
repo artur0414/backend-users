@@ -1,3 +1,5 @@
+//Archivo que contiene la logica de las rutas para el usuario
+
 import { validateApi, validatePartialApi } from "../schemas/schema.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -14,6 +16,7 @@ export class UserController {
     this.userModel = userModel;
   }
 
+  //crear un nuevo usuario, valida los datos y encripta la contraseña
   create = async (req, res) => {
     try {
       const result = validateApi(req.body);
@@ -51,6 +54,8 @@ export class UserController {
     }
   };
 
+  //obtiene todos los usuarios
+
   getAll = async (req, res) => {
     try {
       const users = await this.userModel.getAll();
@@ -60,6 +65,7 @@ export class UserController {
     }
   };
 
+  //iniciar sesion, valida los datos y compara la contraseña encriptada, si todo es correcto genera un token jwt y lo envia en una cookie al cliente para mantener la sesion
   login = async (req, res) => {
     try {
       const result = validatePartialApi(req.body);
@@ -116,6 +122,7 @@ export class UserController {
     }
   };
 
+  //cierra la sesion eliminando la cookie que contiene el token jwt
   logout = async (req, res) => {
     try {
       if (!req.cookies.access_token) {
@@ -139,6 +146,8 @@ export class UserController {
     }
   };
 
+  //elimina un usuario por su id como parametro
+
   delete = async (req, res) => {
     try {
       const { id } = req.params;
@@ -155,6 +164,7 @@ export class UserController {
     }
   };
 
+  //ruta para actualizar la contraseña, valida los datos y envia un correo con un codigo de recuperacion
   forgotPassword = async (req, res) => {
     try {
       const result = validatePartialApi(req.body);
@@ -210,6 +220,7 @@ export class UserController {
     }
   };
 
+  //ruta para validar el codigo de recuperacion y actualizar la contraseña
   recover = async (req, res) => {
     try {
       const cookieCode = req.cookies.recoveryCode;
@@ -259,6 +270,8 @@ export class UserController {
     }
   };
 
+  //actualiza la contraseña, valida los datos y encripta la nueva contraseña
+
   updatePassword = async (req, res) => {
     try {
       const result = validatePartialApi(req.body);
@@ -299,6 +312,8 @@ export class UserController {
       return res.status(400).json({ error: error.message });
     }
   };
+
+  //actualiza el rol de un usuario, valida los datos y actualiza el rol
 
   updateRole = async (req, res) => {
     try {

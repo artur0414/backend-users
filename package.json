@@ -5,7 +5,8 @@
   "main": "server-with-mysql.js",
   "scripts": {
     "test": "echo \\\"No tests specified\\\" && exit 0",
-    "dev": "node --watch server-with-mysql.js"
+    "dev": "node --watch server-with-mysql.js",
+    "start": "node server-with-mysql.js"
   },
   "type": "module",
   "repository": {

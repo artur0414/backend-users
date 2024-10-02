@@ -1,3 +1,5 @@
+//servidor express
+
 import express from "express";
 import { PORT } from "./config.js";
 import { corsMiddleware } from "./middlewares/cors.js";
@@ -10,6 +12,7 @@ dotenv.config();
 export const createApp = ({ userModel }) => {
   const app = express();
 
+  app.disable("x-powered-by");
   app.use(corsMiddleware());
   app.use(express.json());
   app.use(cookieParser());

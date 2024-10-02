@@ -1,3 +1,5 @@
+//Habilitar CORS para aceptar solicitudes de origen cruzado de un dominio específico
+
 import cors from "cors";
 
 const ACCEPTED_ORIGINS = ["http://localhost:3000"];

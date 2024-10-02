@@ -1,3 +1,5 @@
+// Modelo de usuario para la base de datos MySQL
+
 import { dbConfig } from "../config.js";
 import mysql2 from "mysql2/promise";
 import {
@@ -11,6 +13,7 @@ const config = dbConfig;
 const connection = await mysql2.createConnection(config);
 
 export class UserModel {
+  // Método para crear un usuario en la base de datos MySQL
   static async create({ name, username, email, password, role }) {
     try {
       const [result] = await connection.query(
@@ -42,6 +45,7 @@ export class UserModel {
     }
   }
 
+  // Método para obtener todos los usuarios de la base de datos MySQL
   static async getAll() {
     try {
       const [users] = await connection.query("SELECT * FROM user");
@@ -59,6 +63,7 @@ export class UserModel {
     }
   }
 
+  // Método para obtener un usuario por su ID de la base de datos MySQL
   static async login(input) {
     try {
       let result;
@@ -98,6 +103,7 @@ export class UserModel {
     }
   }
 
+  // Método para elimianr un usuario por su ID de la base de datos MySQL
   static async delete(id) {
     try {
       const [result] = await connection.query("DELETE FROM user WHERE id = ?", [
@@ -117,6 +123,7 @@ export class UserModel {
     }
   }
 
+  // Método para seleccionar un usuario por su ID de la base de datos MySQL y enviar un correo electrónico si el usuario olvidó su contraseña
   static async forgotPassword({ email, code }) {
     try {
       const [result] = await connection.query(
@@ -153,6 +160,7 @@ export class UserModel {
     }
   }
 
+  // Método para recuperar la contraseña de un usuario por su nombre de usuario de la base de datos MySQL y devolver el código y la fecha de expiración
   static async recover(username) {
     try {
       const [result] = await connection.query(
@@ -178,6 +186,7 @@ export class UserModel {
     }
   }
 
+  // Método para actualizar la contraseña de un usuario por su nombre de usuario de la base de datos MySQL
   static async updatePassword({ password, username }) {
     try {
       const [result] = await connection.query(
@@ -199,6 +208,7 @@ export class UserModel {
     }
   }
 
+  // Método para actualizar el rol de un usuario por su nombre de usuario de la base de datos MySQL
   static async updateRole(input) {
     try {
       if (input.role !== "user" && input.role !== "admin") {

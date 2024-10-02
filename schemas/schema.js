@@ -1,10 +1,12 @@
+//validación de datos ingresados por el usuario en la API
+
 import { z } from "zod";
 
 const userSchema = z.object({
   name: z
     .string({
-      required_error: "El nombre es obligatorio", // Mensaje para campo requerido
-      invalid_type_error: "El nombre debe ser una cadena de texto", // Mensaje para tipo inválido
+      required_error: "El nombre es obligatorio",
+      invalid_type_error: "El nombre debe ser una cadena de texto",
     })
     .min(5, {
       message: "El nombre debe tener al menos 5 caracteres",
@@ -15,8 +17,8 @@ const userSchema = z.object({
 
   username: z
     .string({
-      required_error: "El nombre de usuario es obligatorio", // Mensaje para campo requerido
-      invalid_type_error: "El nombre de usuario debe ser una cadena de texto", // Mensaje para tipo inválido
+      required_error: "El nombre de usuario es obligatorio",
+      invalid_type_error: "El nombre de usuario debe ser una cadena de texto",
     })
     .min(5, {
       message: "El nombre de usuario debe tener al menos 5 caracteres",
@@ -27,7 +29,7 @@ const userSchema = z.object({
 
   email: z
     .string({
-      required_error: "El email es obligatorio", // Mensaje para campo requerido
+      required_error: "El email es obligatorio",
     })
     .email({
       message: "El email debe ser un email válido",
@@ -35,8 +37,8 @@ const userSchema = z.object({
 
   password: z
     .string({
-      required_error: "La contraseña es obligatoria", // Mensaje para campo requerido
-      invalid_type_error: "La contraseña debe ser una cadena de texto", // Mensaje para tipo inválido
+      required_error: "La contraseña es obligatoria",
+      invalid_type_error: "La contraseña debe ser una cadena de texto",
     })
     .min(8, {
       message: "La contraseña debe tener al menos 8 caracteres",
@@ -47,8 +49,8 @@ const userSchema = z.object({
 
   role: z
     .string({
-      required_error: "El rol es obligatorio", // Mensaje para campo requerido
-      invalid_type_error: "Rol tiene que ser una cadena de texto", // Mensaje para tipo inválido
+      required_error: "El rol es obligatorio",
+      invalid_type_error: "Rol tiene que ser una cadena de texto",
     })
     .min(4, {
       message: "Rol debe tener al menos 4 caracteres",
@@ -56,8 +58,8 @@ const userSchema = z.object({
 
   code: z
     .string({
-      required_error: "El código es obligatorio", // Mensaje para campo requerido
-      invalid_type_error: "El código debe ser una cadena de texto", // Mensaje para tipo inválido
+      required_error: "El código es obligatorio",
+      invalid_type_error: "El código debe ser una cadena de texto",
     })
     .min(6, {
       message: "El código debe tener al menos 6 caracteres",
@@ -65,10 +67,12 @@ const userSchema = z.object({
     .optional(),
 });
 
+//validación de datos ingresados por el usuario en la API, input que recibe objeto con propiedades a validar
 export const validateApi = (input) => {
   return userSchema.safeParse(input);
 };
 
+//validación parcial de datos ingresados por el usuario en la API, input que recibe objeto con propiedades a validar
 export const validatePartialApi = (input) => {
   return userSchema.partial().safeParse(input);
 };

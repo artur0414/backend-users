@@ -1,3 +1,5 @@
+// Archivo que contiene las funciones para enviar correos electrónicos con el código de restablecimiento de contraseña.
+
 import { SECRET_JWT_KEY_EMAIL } from "./config.js";
 import brevo from "@getbrevo/brevo";
 
