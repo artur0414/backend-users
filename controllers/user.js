@@ -104,7 +104,7 @@ export class UserController {
       return res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" || false,
+          secure: process.env.NODE_ENV === "production",
           sameSite: "Lax",
           maxAge: 1000 * 60 * 60 * 2,
         })
