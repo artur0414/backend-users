@@ -3,7 +3,7 @@
 import jwt from "jsonwebtoken";
 import { SECRET_JWT_KEY } from "../config.js";
 
-export function authenticateToken(req, res, next) {
+export function authToken(req, res, next) {
   const token = req.cookies.access_token;
   if (!token) {
     return res.status(401).json({ error: "No autorizado" });

@@ -2,7 +2,7 @@
 
 import { Router } from "express";
 import { UserController } from "../controllers/user.js";
-import { authenticateToken, authorizeAdmin } from "../middlewares/authToken.js";
+import { authToken, authorizeAdmin } from "../middlewares/authToken.js";
 
 export const createRouter = ({ userModel }) => {
   const userRouter = Router();
@@ -12,18 +12,13 @@ export const createRouter = ({ userModel }) => {
   //ruta para registrar un usuario, solo valida si el usuario es admin
   userRouter.post(
     "/register",
-    authenticateToken,
+    authToken,
     authorizeAdmin,
     userController.create
   );
 
   //ruta para obtener todos los usuarios, solo valida si el usuario es admin
-  userRouter.get(
-    "/getall",
-    authenticateToken,
-    authorizeAdmin,
-    userController.getAll
-  );
+  userRouter.get("/getall", authToken, authorizeAdmin, userController.getAll);
 
   //ruta para iniciar sesion
   userRouter.post("/login", userController.login);
@@ -34,7 +29,7 @@ export const createRouter = ({ userModel }) => {
   //ruta para eliminar un usuario, solo valida si el usuario es admin
   userRouter.delete(
     "/delete/:id",
-    authenticateToken,
+    authToken,
     authorizeAdmin,
     userController.delete
   );
@@ -47,10 +42,14 @@ export const createRouter = ({ userModel }) => {
   //ruta para actualizar el rol de un usuario, solo valida si el usuario es admin
   userRouter.patch(
     "/update-role",
-    authenticateToken,
+    authToken,
     authorizeAdmin,
     userController.updateRole
   );
+
+  // ruta para página protegida
+
+  userRouter.get("/protected", authToken, userController.protected);
 
   return userRouter;
 };

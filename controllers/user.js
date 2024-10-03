@@ -97,7 +97,8 @@ export class UserController {
           email: user.email,
           role: user.role,
         },
-        SECRET_JWT_KEY
+        SECRET_JWT_KEY,
+        { expiresIn: "2h" }
       );
 
       return res
@@ -105,7 +106,7 @@ export class UserController {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" || false,
           sameSite: "Lax",
-          maxAge: 1000 * 60 * 60,
+          maxAge: 1000 * 60 * 60 * 2,
         })
         .status(200)
         .json({ user, token });
@@ -198,7 +199,7 @@ export class UserController {
           { username: user.username },
           {
             httpOnly: true,
-            maxAge: 100 * 60 * 60 * 1000,
+            maxAge: 10 * 60 * 1000,
             secure: process.env.NODE_ENV === "production",
             sameSite: "Lax",
           }
@@ -334,7 +335,6 @@ export class UserController {
 
       return res.status(200).json({ message: "Role updated" });
     } catch (error) {
-      console.log(error);
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -343,6 +343,17 @@ export class UserController {
         return res.status(500).json({ error: error.message });
       }
 
+      return res.status(400).json({ error: error.message });
+    }
+  };
+
+  //ruta protegida, valida el token jwt y devuelve el usuario que esta logueado
+
+  protected = async (req, res) => {
+    try {
+      const user = req.user;
+      return res.status(200).json(user);
+    } catch (error) {
       return res.status(400).json({ error: error.message });
     }
   };
