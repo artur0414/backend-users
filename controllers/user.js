@@ -105,7 +105,7 @@ export class UserController {
         .cookie("access_token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
-          sameSite: "Lax",
+          sameSite: "none",
           maxAge: 1000 * 60 * 60 * 2,
         })
         .status(200)
@@ -201,7 +201,7 @@ export class UserController {
             httpOnly: true,
             maxAge: 10 * 60 * 1000,
             secure: process.env.NODE_ENV === "production",
-            sameSite: "Lax",
+            sameSite: "none",
           }
         )
         .json({
