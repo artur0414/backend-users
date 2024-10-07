@@ -92,6 +92,7 @@ export class UserController {
 
       const token = jwt.sign(
         {
+          name: user.name,
           id: user.id,
           username: user.username,
           email: user.email,
