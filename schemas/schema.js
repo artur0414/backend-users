@@ -65,6 +65,18 @@ const userSchema = z.object({
       message: "El código debe tener al menos 6 caracteres",
     })
     .optional(),
+  newPassword: z
+    .string({
+      required_error: "La nueva contraseña es obligatoria",
+      invalid_type_error: "La nueva contraseña debe ser una cadena de texto",
+    })
+    .min(8, {
+      message: "La nueva contraseña debe tener al menos 8 caracteres",
+    })
+    .max(100, {
+      message: "La nueva contraseña debe tener como máximo 100 caracteres",
+    })
+    .optional(),
 });
 
 //validación de datos ingresados por el usuario en la API, input que recibe objeto con propiedades a validar

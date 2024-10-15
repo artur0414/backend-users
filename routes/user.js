@@ -47,6 +47,14 @@ export const createRouter = ({ userModel }) => {
     userController.updateRole
   );
 
+  //Ruta para actualizar contraseña de un usuario
+
+  userRouter.patch(
+    "/update-password",
+    authToken,
+    userController.updatePassword
+  );
+
   // ruta para página protegida
 
   userRouter.get("/protected", authToken, userController.protected);

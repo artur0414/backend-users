@@ -97,6 +97,7 @@ export class UserController {
           username: user.username,
           email: user.email,
           role: user.role,
+          password: user.password,
         },
         SECRET_JWT_KEY,
         { expiresIn: "2h" }
@@ -355,6 +356,51 @@ export class UserController {
       const user = req.user;
       return res.status(200).json(user);
     } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  };
+
+  //actualiza la contraseña, valida los datos y encripta la nueva contraseña
+
+  updatePassword = async (req, res) => {
+    try {
+      const result = validatePartialApi(req.body);
+
+      if (!result.success) {
+        const errorMessages = result.error.errors.map(
+          (error) =>
+            error.message || error.invalid_type_error || "Error de validación"
+        );
+
+        throw new Error(errorMessages.join(", "));
+      }
+
+      const isValid = await bcrypt.compare(
+        result.data.password,
+        req.user.password
+      );
+
+      if (!isValid) {
+        throw new Error("Contraseña incorrecta");
+      }
+
+      const hashedPassword = await bcrypt.hash(result.data.newPassword, 10);
+
+      await this.userModel.updatePassword({
+        password: hashedPassword,
+        username: req.user.username,
+      });
+
+      return res.status(200).json({ message: "Contraseña actualizada" });
+    } catch (error) {
+      if (
+        error instanceof ServerError ||
+        error instanceof DuplicateEntryError ||
+        error instanceof ConnectionRefusedError
+      ) {
+        return res.status(500).json({ error: error.message });
+      }
+
       return res.status(400).json({ error: error.message });
     }
   };

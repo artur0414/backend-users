@@ -233,4 +233,25 @@ export class UserModel {
       );
     }
   }
+
+  static async updatePassword({ password, username }) {
+    try {
+      const [result] = await connection.query(
+        "UPDATE user SET password = ? WHERE username = ?",
+        [password, username]
+      );
+
+      return;
+    } catch (error) {
+      if (error.code === "ENOTFOUND") {
+        throw new ConnectionRefusedError(
+          "Un error ocurrió. Por favor, contacte al administrador."
+        );
+      }
+
+      throw new ServerError(
+        "un error ocurrió mientras se intentaba actualizar la contraseña, por favor, intenta de nuevo."
+      );
+    }
+  }
 }
