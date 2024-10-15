@@ -362,7 +362,7 @@ export class UserController {
 
   //actualiza la contraseña, valida los datos y encripta la nueva contraseña
 
-  updatePassword = async (req, res) => {
+  updateCurrentPassword = async (req, res) => {
     try {
       const result = validatePartialApi(req.body);
 
@@ -386,7 +386,7 @@ export class UserController {
 
       const hashedPassword = await bcrypt.hash(result.data.newPassword, 10);
 
-      await this.userModel.updatePassword({
+      await this.userModel.updateCurrentPassword({
         password: hashedPassword,
         username: req.user.username,
       });

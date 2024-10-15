@@ -52,7 +52,7 @@ export const createRouter = ({ userModel }) => {
   userRouter.patch(
     "/update-password",
     authToken,
-    userController.updatePassword
+    userController.updateCurrentPassword
   );
 
   // ruta para página protegida

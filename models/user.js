@@ -234,7 +234,7 @@ export class UserModel {
     }
   }
 
-  static async updatePassword({ password, username }) {
+  static async updateCurrentPassword({ password, username }) {
     try {
       const [result] = await connection.query(
         "UPDATE user SET password = ? WHERE username = ?",
