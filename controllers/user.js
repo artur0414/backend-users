@@ -191,6 +191,10 @@ export class UserController {
         throw new Error("Usuario no encontrado");
       }
 
+      if (user.username !== result.data.username) {
+        throw new Error("Usuario no encontrado");
+      }
+
       // send email with recover password
 
       await sendEmail(user.email, code);
