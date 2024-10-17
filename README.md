@@ -196,3 +196,52 @@ Los superadministradores poseen todos los permisos de un administrador, además 
 En la siguiente fase, se desarrollará una **API RESTful** llamada **CacaoApi**, que gestionará toda la información relacionada con las plantas de cacao. Esta API permitirá a administradores y superadministradores interactuar con los datos de las plantas, como registrar, actualizar y eliminar información. 
 
 Cabe destacar que **CacaoApi** será independiente de la API actual para mejorar la escalabilidad y modularidad del sistema, asegurando que las futuras expansiones puedan manejarse de manera eficiente y separada, evitando la sobrecarga de una sola API.
+
+---
+# Instrucciones para Instalar y Ejecutar la API
+
+Para instalar y ejecutar esta API, sigue los siguientes pasos:
+
+## Instalación
+
+1. **Clonar el repositorio**:
+   ```
+   git clone <URL_DEL_REPOSITORIO>
+   ```
+
+2. **Navegar a la carpeta del proyecto**:
+   ```
+   cd nombre-del-proyecto
+   ```
+
+3. **Instalar las dependencias**:
+   ```
+   npm install
+   ```
+
+4. **Configurar la base de datos**:
+   - Asegúrate de tener MySQL instalado y ejecutándose.
+   - Crea una base de datos con el nombre `nombre_de_la_base_de_datos`.
+   - Actualiza las credenciales de la base de datos en el archivo de configuración.
+
+5. **Iniciar la aplicación**:
+   ```
+   npm start
+   ```
+
+## Uso
+
+Una vez que la aplicación esté en funcionamiento, podrás acceder a la API a través de `http://localhost:3000` (o el puerto que hayas configurado). Consulta la documentación de la API para obtener información sobre los endpoints disponibles y cómo utilizarlos.
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Si deseas contribuir, sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama (`git checkout -b mi-rama`).
+3. Realiza tus cambios y confirma (`git commit -m 'Añadí una nueva característica'`).
+4. Envía tus cambios a tu fork (`git push origin mi-rama`).
+5. Abre un Pull Request para que tus cambios sean revisados.
+
+Gracias por tu interés en contribuir a este proyecto.
+
