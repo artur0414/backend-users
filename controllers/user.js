@@ -133,7 +133,11 @@ export class UserController {
       }
 
       return res
-        .clearCookie("access_token")
+        .clearCookie("access_token", {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "none",
+        })
         .status(200)
         .json({ message: "Sesión cerrada con éxito" });
     } catch (error) {
@@ -304,7 +308,11 @@ export class UserController {
         username: cookieCode.username,
       });
 
-      res.clearCookie("recoveryCode");
+      res.clearCookie("recoveryCode", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+      });
 
       return res.status(200).json({ message: "Password updated" });
     } catch (error) {
