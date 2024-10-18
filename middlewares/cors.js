@@ -4,7 +4,7 @@ import cors from "cors";
 
 const ACCEPTED_ORIGINS = [
   "http://localhost:3000",
-  "https://frontend-users-bwsc16525-arturo-acostas-projects.vercel.app",
+  "https://frontend-users-ho6g9prlm-arturo-acostas-projects.vercel.app",
 ];
 
 export const corsMiddleware = ({ acceptedCors = ACCEPTED_ORIGINS } = {}) => {
