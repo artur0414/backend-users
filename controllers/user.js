@@ -316,7 +316,7 @@ export class UserController {
 
       res.clearCookie("recoveryCode", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production" ? true : false,-
+        secure: process.env.NODE_ENV === "production" ? true : false,
         partitioned: true, // Esto es clave para iOS
         sameSite: "none",
       });
