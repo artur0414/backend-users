@@ -106,7 +106,8 @@ export class UserController {
       return res
         .cookie("access_token", token, {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          //secure: process.env.NODE_ENV === "production" ? true : false,
+          secure: true,
           sameSite: "none",
           partitioned: true, // Esto es clave para iOS
           maxAge: 1000 * 60 * 60 * 2,
@@ -136,7 +137,7 @@ export class UserController {
       return res
         .clearCookie("access_token", {
           httpOnly: true,
-          secure: process.env.NODE_ENV === "production" ? true : false,
+          secure: true,
           partitioned: true, // Esto es clave para iOS
           sameSite: "none",
         })
@@ -212,7 +213,7 @@ export class UserController {
           {
             httpOnly: true,
             maxAge: 10 * 60 * 1000,
-            secure: process.env.NODE_ENV === "production" ? true : false,
+            secure: true,
             partitioned: true, // Esto es clave para iOS
             sameSite: "none",
           }
@@ -313,7 +314,7 @@ export class UserController {
 
       res.clearCookie("recoveryCode", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         partitioned: true, // Esto es clave para iOS
         sameSite: "none",
       });
