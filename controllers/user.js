@@ -114,7 +114,7 @@ export class UserController {
         .status(200)
         .json({ user, token });
     } catch (error) {
-      console.log(error)
+      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -144,7 +144,7 @@ export class UserController {
         .status(200)
         .json({ message: "Sesión cerrada con éxito" });
     } catch (error) {
-      console.log(error)
+      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -224,7 +224,7 @@ export class UserController {
           username: user.username,
         });
     } catch (error) {
-      console.log(error)
+      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -323,7 +323,7 @@ export class UserController {
 
       return res.status(200).json({ message: "Password updated" });
     } catch (error) {
-      console.log(error)
+      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
