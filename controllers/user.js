@@ -108,13 +108,12 @@ export class UserController {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" ? true : false,
           sameSite: "none",
-          partitioned: true, // Esto es clave para iOS
+          partitioned: true,
           maxAge: 1000 * 60 * 60 * 2,
         })
         .status(200)
         .json({ user, token });
     } catch (error) {
-      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -138,13 +137,12 @@ export class UserController {
         .clearCookie("access_token", {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production" ? true : false,
-          partitioned: true, // Esto es clave para iOS
+          partitioned: true, 
           sameSite: "none",
         })
         .status(200)
         .json({ message: "Sesión cerrada con éxito" });
     } catch (error) {
-      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -215,7 +213,7 @@ export class UserController {
             httpOnly: true,
             maxAge: 10 * 60 * 1000,
             secure: process.env.NODE_ENV === "production" ? true : false,
-            partitioned: true, // Esto es clave para iOS
+            partitioned: true, 
             sameSite: "none",
           }
         )
@@ -224,7 +222,6 @@ export class UserController {
           username: user.username,
         });
     } catch (error) {
-      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
@@ -317,13 +314,12 @@ export class UserController {
       res.clearCookie("recoveryCode", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production" ? true : false,
-        partitioned: true, // Esto es clave para iOS
+        partitioned: true, 
         sameSite: "none",
       });
 
       return res.status(200).json({ message: "Password updated" });
     } catch (error) {
-      console.error(error)
       if (
         error instanceof ServerError ||
         error instanceof DuplicateEntryError ||
