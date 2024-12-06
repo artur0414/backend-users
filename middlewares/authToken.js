@@ -6,7 +6,7 @@ import { SECRET_JWT_KEY } from "../config.js";
 export function authToken(req, res, next) {
   const token = req.cookies.access_token;
   if (!token) {
-    return res.status(401).json({ error: "No autorizado, no encuentra la cookie" });
+    return res.status(401).json({ error: "No autorizado, no se encuentra la cookie" });
   }
 
   try {
@@ -18,7 +18,7 @@ export function authToken(req, res, next) {
     req.user = data;
     next();
   } catch (error) {
-    return res.status(401).json({ error: "No autorizado" + error.message });
+    return res.status(401).json({ error: "No autorizado"});
   }
 }
 
