@@ -5,7 +5,7 @@ import cors from "cors";
 const ACCEPTED_ORIGINS = [
   "http://localhost:3000",
   "https://front-end-cacao-api-users.vercel.app",
-  "https://luxury-swan-bf9c53.netlify.app",
+  "https://app.cacaoapi.online",
 ];
 
 export const corsMiddleware = ({ acceptedCors = ACCEPTED_ORIGINS } = {}) => {
