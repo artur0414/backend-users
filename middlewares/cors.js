@@ -4,8 +4,7 @@ import cors from "cors";
 
 const ACCEPTED_ORIGINS = [
   "http://localhost:3000",
-  "https://front-end-cacao-api-users.vercel.app",
-  "https://app.cacaoapi.online",
+  "https://*.cacaoapi.online"
 ];
 
 export const corsMiddleware = ({ acceptedCors = ACCEPTED_ORIGINS } = {}) => {
